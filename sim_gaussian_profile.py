@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from fit_gaussian_profile import fit_gaussian_profile
+from fit_gaussian_profile_p import fit_gaussian_profile_p
 
 class sim_gaussian_profile:
 
@@ -49,7 +50,8 @@ class sim_gaussian_profile:
         self.sim['poisson'] = np.random.poisson(self.sim['model'])
 
     def fit_profile(self):
-        self.sim['fit_poisson'] = fit_gaussian_profile(self.sim['wave'], self.sim['poisson'])
+        #self.sim['fit_poisson'] = fit_gaussian_profile(self.sim['wave'], self.sim['poisson'])
+        self.sim['fit_poisson'] = fit_gaussian_profile_p(self.sim['wave'], self.sim['poisson'])
         self.fit_status = self.sim['fit_poisson']['converged']
 
     def print_fit(self):

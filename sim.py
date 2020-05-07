@@ -4,7 +4,7 @@ from sim_gaussian_profile import sim_gaussian_profile
 import numpy as np
 
 init = True
-nsim = 10000
+nsim = 1000
 total_counts = [100,200,400,800,1600,3200,6400]
 
 def print_data(data):
@@ -31,3 +31,4 @@ for c in total_counts:
         o = sim_gaussian_profile(total_counts=c)
         data.append(o.sim['fit_poisson']['p'])
     print_data(data)
+
