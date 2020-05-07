@@ -8,7 +8,7 @@ from fit_gaussian_profile_p import fit_gaussian_profile_p
 class sim_gaussian_profile:
 
     def __init__(self, total_counts=100, wave0=977.02, sigma0=86., dwave=37., nwave=32, \
-                 display=False):
+                 display=False, poisson=False):
         self.sim = {} # store results here
         self.nwave = nwave # number of pixels in wavelength array
         self.dwave = dwave/1000. # dispersion in Angstroms
@@ -16,6 +16,7 @@ class sim_gaussian_profile:
         self.total_counts = total_counts # total counts we want in the profile
         self.sigma0 = sigma0/1000. # Gaussian width in Angstroms
         self.fit_status = False
+        self.poisson = poisson
 
         self.calc_wave()
         self.calc_profile_model()
@@ -50,8 +51,10 @@ class sim_gaussian_profile:
         self.sim['poisson'] = np.random.poisson(self.sim['model'])
 
     def fit_profile(self):
-        #self.sim['fit_poisson'] = fit_gaussian_profile(self.sim['wave'], self.sim['poisson'])
-        self.sim['fit_poisson'] = fit_gaussian_profile_p(self.sim['wave'], self.sim['poisson'])
+        if self.poisson:
+            self.sim['fit_poisson'] = fit_gaussian_profile_p(self.sim['wave'], self.sim['poisson'])
+        else:
+            self.sim['fit_poisson'] = fit_gaussian_profile(self.sim['wave'], self.sim['poisson'])
         self.fit_status = self.sim['fit_poisson']['converged']
 
     def print_fit(self):

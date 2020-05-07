@@ -28,7 +28,8 @@ def fit_gaussian_profile_p(wave, profile):
 
     def ln_likelihood(p):
         model = gaussian_funct(wave, *p)
-        l = -profile*np.log(model[g]) + model + sc.gammaln(profile+1)
+        g, = np.where(model > 0)
+        l = -profile[g]*np.log(model[g]) + model[g] + sc.gammaln(profile[g]+1)
         return np.sum(l)
 
     bounds = []
